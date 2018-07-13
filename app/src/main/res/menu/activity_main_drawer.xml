@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/opinion"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/opinion" />
+        <item
+            android:id="@+id/world"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/world" />
+        <item
+            android:id="@+id/national"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/national" />
+        <item
+            android:id="@+id/politics"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/politics" />
+        <item
+            android:id="@+id/business"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/business" />
+        <item
+            android:id="@+id/technology"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/technology" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
