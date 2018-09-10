@@ -1,4 +1,7 @@
 package com.aakimov.nyt.ui.base
 
-interface BaseView {
+import io.reactivex.Observable
+
+interface BaseView<E : BaseEvent, S : BaseViewState> {
+    fun render(state: S)
 }

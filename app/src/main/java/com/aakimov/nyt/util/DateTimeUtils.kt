@@ -12,13 +12,12 @@ class DateTimeUtils {
 
         @JvmStatic
         fun fromBackendDateTime(value: String): Date {
-            val date = try {
+            return try {
                 backendDateTimeFormat.parse(value)
             } catch (e: ParseException) {
                 Log.e(this::class.toString(), "can't parseBackendDateTime")
                 Date(0)
             }
-            return date
         }
 
         @JvmStatic

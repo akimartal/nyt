@@ -41,7 +41,6 @@ class StoriesTransformer : ObservableTransformer<NytResponse<List<StoryResponse>
                 sr.orgFacet,
                 sr.perFacet,
                 sr.geoFacet,
-                multimedia,
                 sr.shortUrl)
         story.story = plainStory
         story.multimedia = multimedia

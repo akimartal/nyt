@@ -1,11 +1,14 @@
 package com.aakimov.nyt.ui.stories
 
 import com.aakimov.nyt.entity.Story
+import com.aakimov.nyt.ui.base.BaseViewState
 
-sealed class StoriesViewState {
-    fun reduce(event: StoriesEvent): StoriesViewState {
-        return Empty
-    }
+sealed class StoriesViewState : BaseViewState {
+    fun reduce(event: StoriesEvent): StoriesViewState =
+            when (event) {
+                is StoriesEvent.LoadStories -> Loading
+                is StoriesEvent.StoryDetails -> Fail(event.storyGuid)
+            }
 
     object Empty : StoriesViewState()
     object Loading : StoriesViewState()

@@ -9,14 +9,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.aakimov.nyt.R
 import com.aakimov.nyt.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_stories.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_stories)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
@@ -30,6 +30,8 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.content, StoriesFragment.newInstance()).commit()
     }
 
     override fun onBackPressed() {
