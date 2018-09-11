@@ -19,11 +19,6 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         setContentView(R.layout.activity_stories)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -31,7 +26,7 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
         nav_view.setNavigationItemSelectedListener(this)
         supportFragmentManager.beginTransaction()
-                .replace(R.id.content, StoriesFragment.newInstance()).commit()
+                .add(R.id.content, StoriesFragment.newInstance()).commit()
     }
 
     override fun onBackPressed() {

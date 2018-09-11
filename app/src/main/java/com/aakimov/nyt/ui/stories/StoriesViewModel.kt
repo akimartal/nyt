@@ -11,7 +11,7 @@ import io.reactivex.functions.BiFunction
 import timber.log.Timber
 import javax.inject.Inject
 
-class NewsViewModel @Inject constructor(val repository: StoriesRepository) :
+class StoriesViewModel @Inject constructor(val repository: StoriesRepository) :
         BaseViewModel<StoriesEvent>() {
 
     val state: MutableLiveData<StoriesViewState> = MutableLiveData()
@@ -45,8 +45,6 @@ class NewsViewModel @Inject constructor(val repository: StoriesRepository) :
             is StoriesEvent.StoryDetails ->{Timber.d("Story guid - ${event.storyGuid}")}
         }
     }
-
-
 }
 
 sealed class StoriesEvent : BaseEvent() {

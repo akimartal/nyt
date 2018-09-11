@@ -32,15 +32,15 @@ class StoriesTransformer : ObservableTransformer<NytResponse<List<StoryResponse>
                 sr.url,
                 sr.byline,
                 sr.itemType,
-                DateTimeUtils.fromBackendDateTime(sr.updatedDate),
-                DateTimeUtils.fromBackendDateTime(sr.createdDate),
-                DateTimeUtils.fromBackendDateTime(sr.publishedDate),
+//                DateTimeUtils.fromBackendDateTime(sr.updatedDate),
+//                DateTimeUtils.fromBackendDateTime(sr.createdDate),
+//                DateTimeUtils.fromBackendDateTime(sr.publishedDate),
                 sr.materialTypeFacet,
                 sr.kicker,
-                sr.desFacet,
-                sr.orgFacet,
-                sr.perFacet,
-                sr.geoFacet,
+//                sr.desFacet,
+//                sr.orgFacet,
+//                sr.perFacet,
+//                sr.geoFacet,
                 sr.shortUrl)
         story.story = plainStory
         story.multimedia = multimedia

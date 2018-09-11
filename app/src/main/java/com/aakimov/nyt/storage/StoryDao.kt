@@ -17,10 +17,10 @@ abstract class StoryDao {
     abstract fun insertMultimedias(multimedias: List<Multimedia>)
 
     @Delete
-    abstract fun delete(stories: List<Story>)
+    abstract fun delete(stories: List<PlainStory>)
 
     @Transaction
-    fun insertStories(stories: List<Story>) {
+   open fun insertStories(stories: List<Story>) {
         val plainStories = stories.map { it.story }.toList()
         insert(plainStories.filterNotNull())
         val multimedias = stories.flatMap { it.multimedia }.toList()
