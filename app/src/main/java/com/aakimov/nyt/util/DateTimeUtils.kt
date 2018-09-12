@@ -1,28 +1,29 @@
 package com.aakimov.nyt.util
 
-import android.util.Log
+import org.joda.time.format.ISODateTimeFormat
+import timber.log.Timber
 import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DateTimeUtils {
     companion object {
-       private var backendDateTimeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale
-                .getDefault())
+
 
         @JvmStatic
         fun fromBackendDateTime(value: String): Date {
             return try {
-                backendDateTimeFormat.parse(value)
+                Timber.d("parseBackendDateTime $value")
+                ISODateTimeFormat.dateTimeNoMillis().parseDateTime(value).toDate()
             } catch (e: ParseException) {
-                Log.e(this::class.toString(), "can't parseBackendDateTime")
+                Timber.e("can't parseBackendDateTime $value")
                 Date(0)
             }
+
         }
 
         @JvmStatic
         fun toBackendDateTimeString(value: Date): String {
-            return backendDateTimeFormat.format(value)
+            return ISODateTimeFormat.dateTimeNoMillis().print(value.time)
         }
     }
 }

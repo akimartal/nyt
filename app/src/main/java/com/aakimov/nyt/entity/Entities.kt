@@ -1,6 +1,9 @@
 package com.aakimov.nyt.entity
 
 import android.arch.persistence.room.*
+import com.aakimov.nyt.storage.DateConverter
+import com.aakimov.nyt.storage.StringListConverter
+import java.util.*
 
 
 class Story {
@@ -12,7 +15,6 @@ class Story {
 }
 
 @Entity(tableName = "story")
-//@TypeConverters(Converters::class)
 data class PlainStory(
         @PrimaryKey
         @ColumnInfo(name = "guid") var guid: String = "",
@@ -23,15 +25,22 @@ data class PlainStory(
         @ColumnInfo(name = "url") var url: String = "",
         @ColumnInfo(name = "byline") var byline: String = "",
         @ColumnInfo(name = "item_type") var itemType: String = "",
-//        @ColumnInfo(name = "updated_date") var updatedDate: Date,
-//        @ColumnInfo(name = "created_date") var createdDate: Date,
-//        @ColumnInfo(name = "published_date") var publishedDate: Date,
+        @TypeConverters(DateConverter::class)
+        @ColumnInfo(name = "updated_date") var updatedDate: Date = Date(),
+        @TypeConverters(DateConverter::class)
+        @ColumnInfo(name = "created_date") var createdDate: Date = Date(),
+        @TypeConverters(DateConverter::class)
+        @ColumnInfo(name = "published_date") var publishedDate: Date = Date(),
         @ColumnInfo(name = "material_type_facet") var materialTypeFacet: String = "",
         @ColumnInfo(name = "kicker") var kicker: String = "",
-//        @ColumnInfo(name = "des_facet") var desFacet: List<String>,
-//        @ColumnInfo(name = "org_facet") var orgFacet: List<String>,
-//        @ColumnInfo(name = "per_facet") var perFacet: List<String>,
-//        @ColumnInfo(name = "geo_facet") var geoFacet: List<String>,
+        @TypeConverters(StringListConverter::class)
+        @ColumnInfo(name = "des_facet") var desFacet: List<String> = emptyList(),
+        @TypeConverters(StringListConverter::class)
+        @ColumnInfo(name = "org_facet") var orgFacet: List<String> = emptyList(),
+        @TypeConverters(StringListConverter::class)
+        @ColumnInfo(name = "per_facet") var perFacet: List<String> = emptyList(),
+        @TypeConverters(StringListConverter::class)
+        @ColumnInfo(name = "geo_facet") var geoFacet: List<String> = emptyList(),
         @ColumnInfo(name = "short_url") var shortUrl: String? = ""
 )
 

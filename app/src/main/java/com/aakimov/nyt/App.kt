@@ -26,11 +26,6 @@ class App : Application() {
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         appComponent.inject(this)
         fragmentComponent = DaggerFragmentComponent.builder().appComponent(appComponent).build()
-        api.stories("home")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ },
-                        { t -> Log.d("!!! error-", t.toString()) })
     }
 
     companion object {
