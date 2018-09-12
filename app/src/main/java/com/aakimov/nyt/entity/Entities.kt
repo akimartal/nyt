@@ -32,7 +32,7 @@ data class PlainStory(
 //        @ColumnInfo(name = "org_facet") var orgFacet: List<String>,
 //        @ColumnInfo(name = "per_facet") var perFacet: List<String>,
 //        @ColumnInfo(name = "geo_facet") var geoFacet: List<String>,
-        @ColumnInfo(name = "short_url") var shortUrl: String = ""
+        @ColumnInfo(name = "short_url") var shortUrl: String? = ""
 )
 
 @Entity(tableName = "multimedia"

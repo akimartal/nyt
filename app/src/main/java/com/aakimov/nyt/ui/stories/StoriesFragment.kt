@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.aakimov.nyt.App
 import com.aakimov.nyt.R
 import com.aakimov.nyt.di.NytViewModelFactory
@@ -25,7 +24,7 @@ class StoriesFragment : Fragment(), StoriesView {
         fun newInstance() = StoriesFragment()
     }
 
-    private val eventsSubject = PublishSubject.create<StoriesEvent>()
+    private val loadStoriesSubject = PublishSubject.create<Boolean>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stories, container, false)
@@ -39,15 +38,11 @@ class StoriesFragment : Fragment(), StoriesView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val viewModel = ViewModelProviders.of(this, viewModeFactory).get(StoriesViewModel::class.java)
-        viewModel.observeEvents(eventsSubject)
+        viewModel.observeLoadStories(loadStoriesSubject)
 
         viewModel.state.observe(this, Observer { state -> render(state!!) })
         button.setOnClickListener {
-            eventsSubject.onNext(StoriesEvent.LoadStories)
-        }
-
-        Button(activity).setOnClickListener {
-            eventsSubject.onNext(StoriesEvent.StoryDetails("!!!"))
+            loadStoriesSubject.onNext(true)
         }
     }
 

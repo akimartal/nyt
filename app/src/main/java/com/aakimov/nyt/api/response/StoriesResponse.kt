@@ -29,7 +29,7 @@ data class StoryResponse(
         @SerializedName("per_facet") val perFacet: List<String>,
         @SerializedName("geo_facet") val geoFacet: List<String>,
         @SerializedName("multimedia") val multimedia: List<MultimediaResponse>,
-        @SerializedName("short_url") val shortUrl: String
+        @SerializedName("short_url") val shortUrl: String?
 )
 
 data class MultimediaResponse(

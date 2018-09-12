@@ -7,7 +7,8 @@ sealed class StoriesViewState : BaseViewState {
     fun reduce(event: StoriesEvent): StoriesViewState =
             when (event) {
                 is StoriesEvent.LoadStories -> Loading
-                is StoriesEvent.StoryDetails -> Fail(event.storyGuid)
+                is StoriesEvent.StoriesLoaded -> Success(event.stories)
+                is StoriesEvent.StoriesLoadedWithError -> Fail(event.errorText)
             }
 
     object Empty : StoriesViewState()
