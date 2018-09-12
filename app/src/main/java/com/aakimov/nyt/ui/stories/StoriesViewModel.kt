@@ -41,9 +41,9 @@ class StoriesViewModel @Inject constructor(val repository: StoriesRepository) :
         disposable.dispose()
     }
 
-    fun observeLoadStories(loadStoriesObservable: Observable<Boolean>) {
+    fun observeLoadStories(loadStoriesObservable: Observable<String>) {
         loadStoriesObservable
-                .flatMap { repository.news("technology") }
+                .flatMap { repository.news(it) }
                 .subscribe(eventsSubject)
     }
 }

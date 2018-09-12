@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +22,18 @@ class StoriesFragment : Fragment(), StoriesView {
     lateinit var viewModeFactory: NytViewModelFactory
 
     companion object {
-        fun newInstance() = StoriesFragment()
+        private const val TOPIC_KEY = "TOPIC_KEY"
+
+        fun newInstance(topic: String): Fragment {
+            val f = StoriesFragment()
+            val args = Bundle()
+            args.putString(TOPIC_KEY, topic)
+            f.arguments = args
+            return f
+        }
     }
 
-    private val loadStoriesSubject = PublishSubject.create<Boolean>()
+    private val loadStoriesSubject = PublishSubject.create<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stories, container, false)
@@ -41,12 +50,25 @@ class StoriesFragment : Fragment(), StoriesView {
         viewModel.observeLoadStories(loadStoriesSubject)
 
         viewModel.state.observe(this, Observer { state -> render(state!!) })
-        button.setOnClickListener {
-            loadStoriesSubject.onNext(true)
-        }
+        loadStoriesSubject.onNext(arguments!!.getString(TOPIC_KEY))
+        list.layoutManager = LinearLayoutManager(context)
+        list.adapter = StoriesAdapter()
     }
 
     override fun render(state: StoriesViewState) {
+        when (state) {
+            is StoriesViewState.Empty -> {
 
+            }
+            is StoriesViewState.Loading -> {
+
+            }
+            is StoriesViewState.Success -> {
+                (list.adapter as StoriesAdapter).setItems(state.stories)
+            }
+            is StoriesViewState.Fail -> {
+
+            }
+        }
     }
 }

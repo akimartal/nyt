@@ -13,7 +13,7 @@ sealed class StoriesViewState : BaseViewState {
 
     object Empty : StoriesViewState()
     object Loading : StoriesViewState()
-    data class Success(val news: List<Story>) : StoriesViewState()
+    data class Success(val stories: List<Story>) : StoriesViewState()
     data class Fail(val error: String) : StoriesViewState()
 
 }
