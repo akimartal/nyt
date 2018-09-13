@@ -8,7 +8,7 @@ data class StoriesViewState(val isLoading: Boolean = false, val errorText: Strin
 
     fun reduce(event: StoriesEvent): StoriesViewState =
             when (event) {
-                is StoriesEvent.LoadStories -> copy(isLoading = true)
+                is StoriesEvent.LoadStories -> copy(isLoading = true, errorText = "")
                 is StoriesEvent.StoriesLoaded -> copy(isLoading = false, stories = event.stories)
                 is StoriesEvent.StoriesLoadedWithError -> copy(isLoading = false,
                         errorText = event.errorText)

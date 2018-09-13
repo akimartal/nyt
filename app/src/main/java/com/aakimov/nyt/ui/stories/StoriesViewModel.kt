@@ -13,7 +13,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-class StoriesViewModel @Inject constructor(val repository: StoriesRepository) :
+class StoriesViewModel @Inject constructor(private val repository: StoriesRepository) :
         BaseViewModel<StoriesEvent>() {
 
     private val eventsSubject = PublishSubject.create<StoriesEvent>()

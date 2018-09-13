@@ -4,9 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -57,11 +55,11 @@ class StoriesFragment : BaseFragment(), StoriesView {
         viewModel.observeLoadStories(loadStoriesSubject)
 
         viewModel.state.observe(this, Observer { state -> render(state!!) })
-        loadStoriesSubject.onNext(arguments!!.getString(TOPIC_KEY))
+        loadStoriesSubject.onNext(getStringArg(TOPIC_KEY))
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
         refresh.setOnRefreshListener {
-            loadStoriesSubject.onNext(arguments!!.getString(TOPIC_KEY))
+            loadStoriesSubject.onNext(getStringArg(TOPIC_KEY))
         }
     }
 
@@ -69,14 +67,7 @@ class StoriesFragment : BaseFragment(), StoriesView {
         refresh.isRefreshing = state.isLoading
         adapter.setItems(state.stories)
         if (state.errorText.isNotEmpty()) {
-            inform(state.errorText)
+            inform(R.id.refresh, state.errorText)
         }
-    }
-
-    private fun inform(text: String) {
-        val snack = Snackbar.make(view!!.findViewById(R.id.content), text, Snackbar.LENGTH_SHORT)
-        val view = snack.view
-        view.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorAccent, null))
-        snack.show()
     }
 }
