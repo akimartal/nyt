@@ -21,14 +21,14 @@ class StoriesViewModel @Inject constructor(val repository: StoriesRepository) :
     private var disposable: Disposable
 
     init {
-        val state = StoriesViewState.Empty
+        val state = StoriesViewState()
         val reducer = createReducer()
 
         disposable = eventsSubject
                 .scan(state, reducer)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.d("Got state ${it.javaClass.simpleName}")
+                    Timber.d("Got state $it")
                     this.state.value = it
                 }, { Timber.e(it) })
     }

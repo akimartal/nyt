@@ -6,6 +6,8 @@ import com.aakimov.nyt.R
 import com.aakimov.nyt.api.ApiRequestInterceptor
 import com.aakimov.nyt.api.ApiService
 import com.aakimov.nyt.storage.Db
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -70,6 +72,12 @@ class AppModule(val app: Application) {
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGlide(): RequestManager {
+        return Glide.with(app)
     }
 
     private fun createRetrofit(url: String, okHttpClient: OkHttpClient, gson: Gson) =

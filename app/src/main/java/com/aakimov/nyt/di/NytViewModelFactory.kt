@@ -5,13 +5,15 @@ import android.arch.lifecycle.ViewModelProvider
 import dagger.MapKey
 import javax.inject.Inject
 import javax.inject.Provider
-import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @FragmentScope
-class NytViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out
-ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory {
+class NytViewModelFactory
+@Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>)
+    : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T = viewModels[modelClass]?.get() as T
+
 }
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)

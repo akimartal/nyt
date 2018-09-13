@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.aakimov.nyt.App
 import com.aakimov.nyt.R
 import com.aakimov.nyt.entity.Story
+import com.bumptech.glide.RequestManager
+import javax.inject.Inject
 
 
-class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
+class StoriesAdapter constructor(val glide: RequestManager)
+    : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
+
     private var items: List<Story> = emptyList()
 
     fun setItems(items: List<Story>) {
@@ -30,6 +35,11 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
 
     override fun onBindViewHolder(vh: StoriesAdapter.StoryViewHolder, pos: Int) {
         vh.title.text = items[pos].story!!.title
+        if (items[pos].multimedia.isNotEmpty()) {
+            glide.load(items[pos].multimedia[0].url).into(vh.image)
+        } else {
+            glide.load(R.drawable.ic_menu_camera).into(vh.image)
+        }
     }
 
     class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

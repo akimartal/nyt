@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +14,19 @@ import android.view.ViewGroup
 import com.aakimov.nyt.App
 import com.aakimov.nyt.R
 import com.aakimov.nyt.di.NytViewModelFactory
+import com.aakimov.nyt.ui.base.BaseFragment
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_stories.*
 import javax.inject.Inject
 
-class StoriesFragment : Fragment(), StoriesView {
+
+class StoriesFragment : BaseFragment(), StoriesView {
 
     @Inject
     lateinit var viewModeFactory: NytViewModelFactory
+
+    @Inject
+    lateinit var adapter: StoriesAdapter
 
     companion object {
         private const val TOPIC_KEY = "TOPIC_KEY"
@@ -52,23 +59,24 @@ class StoriesFragment : Fragment(), StoriesView {
         viewModel.state.observe(this, Observer { state -> render(state!!) })
         loadStoriesSubject.onNext(arguments!!.getString(TOPIC_KEY))
         list.layoutManager = LinearLayoutManager(context)
-        list.adapter = StoriesAdapter()
+        list.adapter = adapter
+        refresh.setOnRefreshListener {
+            loadStoriesSubject.onNext(arguments!!.getString(TOPIC_KEY))
+        }
     }
 
     override fun render(state: StoriesViewState) {
-        when (state) {
-            is StoriesViewState.Empty -> {
-
-            }
-            is StoriesViewState.Loading -> {
-
-            }
-            is StoriesViewState.Success -> {
-                (list.adapter as StoriesAdapter).setItems(state.stories)
-            }
-            is StoriesViewState.Fail -> {
-
-            }
+        refresh.isRefreshing = state.isLoading
+        adapter.setItems(state.stories)
+        if (state.errorText.isNotEmpty()) {
+            inform(state.errorText)
         }
+    }
+
+    private fun inform(text: String) {
+        val snack = Snackbar.make(view!!.findViewById(R.id.content), text, Snackbar.LENGTH_SHORT)
+        val view = snack.view
+        view.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorAccent, null))
+        snack.show()
     }
 }

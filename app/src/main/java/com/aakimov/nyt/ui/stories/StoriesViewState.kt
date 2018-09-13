@@ -3,18 +3,21 @@ package com.aakimov.nyt.ui.stories
 import com.aakimov.nyt.entity.Story
 import com.aakimov.nyt.ui.base.BaseViewState
 
-sealed class StoriesViewState : BaseViewState {
+data class StoriesViewState(val isLoading: Boolean = false, val errorText: String = "",
+                            val stories: List<Story> = emptyList()) : BaseViewState {
+
     fun reduce(event: StoriesEvent): StoriesViewState =
             when (event) {
-                is StoriesEvent.LoadStories -> Loading
-                is StoriesEvent.StoriesLoaded -> Success(event.stories)
-                is StoriesEvent.StoriesLoadedWithError -> Fail(event.errorText)
+                is StoriesEvent.LoadStories -> copy(isLoading = true)
+                is StoriesEvent.StoriesLoaded -> copy(isLoading = false, stories = event.stories)
+                is StoriesEvent.StoriesLoadedWithError -> copy(isLoading = false,
+                        errorText = event.errorText)
             }
 
-    object Empty : StoriesViewState()
-    object Loading : StoriesViewState()
-    data class Success(val stories: List<Story>) : StoriesViewState()
-    data class Fail(val error: String) : StoriesViewState()
+    override fun toString(): String {
+        return "StoriesViewState(isLoading=$isLoading, errorText='$errorText', stories " +
+                "size=${stories.size})"
+    }
 
 }
 
