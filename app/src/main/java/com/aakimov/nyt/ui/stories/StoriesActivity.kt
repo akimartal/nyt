@@ -2,7 +2,6 @@ package com.aakimov.nyt.ui.stories
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -24,7 +23,7 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        replaceFragment(StoriesFragment.newInstance("home"))
+        replaceFragment(StoriesFragment.newInstance("home"), false)
     }
 
     override fun onBackPressed() {
@@ -37,7 +36,7 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        replaceFragment(StoriesFragment.newInstance(item.title.toString()))
+        replaceFragment(StoriesFragment.newInstance(item.title.toString()), false)
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

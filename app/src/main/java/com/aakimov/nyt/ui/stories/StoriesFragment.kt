@@ -67,7 +67,7 @@ class StoriesFragment : BaseFragment(), StoriesView {
 
     override fun render(state: StoriesViewState) {
         refresh.isRefreshing = state.isLoading
-        adapter.setItems(state.stories)
+        adapter.setStories(state.stories)
         if (state.errorText.isNotEmpty()) {
             inform(R.id.refresh, state.errorText)
         }

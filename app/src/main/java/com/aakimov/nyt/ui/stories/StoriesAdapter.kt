@@ -14,9 +14,10 @@ import com.bumptech.glide.RequestManager
 class StoriesAdapter constructor(val glide: RequestManager)
     : RecyclerView.Adapter<StoriesAdapter.StoryViewHolder>() {
 
-    private var items: List<Story> = emptyList()
-    private var listener: ((String) -> Unit)? = null
-    fun setItems(items: List<Story>) {
+    var items: List<Story> = emptyList()
+    private var listener: ((Story) -> Unit)? = null
+
+    fun setStories(items: List<Story>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -26,9 +27,10 @@ class StoriesAdapter constructor(val glide: RequestManager)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, pos: Int): StoriesAdapter.StoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.story_list_item, parent, false)
-        view.setOnClickListener { listener?.invoke(items[pos].story.guid) }
-        return StoryViewHolder(view)
+        val vh = StoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout
+                .story_list_item, parent, false))
+        vh.setOnClickListener(listener)
+        return vh
     }
 
     override fun onBindViewHolder(vh: StoriesAdapter.StoryViewHolder, pos: Int) {
@@ -40,13 +42,17 @@ class StoriesAdapter constructor(val glide: RequestManager)
         }
     }
 
-    fun setItemClickedListener(listener: (String) -> Unit) {
+    fun setItemClickedListener(listener: (Story) -> Unit) {
         this.listener = listener
     }
 
-    class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun setOnClickListener(function: ((Story) -> Unit)?) {
+            itemView.setOnClickListener { function?.invoke(items[layoutPosition]) }
+        }
+
         var title: TextView = itemView.findViewById(R.id.title)
         var image: ImageView = itemView.findViewById(R.id.image)
-
     }
 }

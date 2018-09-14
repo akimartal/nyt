@@ -1,5 +1,6 @@
 package com.aakimov.nyt.ui.base
 
+import android.os.Parcelable
 import android.support.annotation.IdRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -11,6 +12,10 @@ open class BaseFragment : Fragment() {
 
     fun Fragment.getStringArg(key: String): String {
         return arguments!!.getString(key)
+    }
+
+    fun <T : Parcelable> Fragment.getParcelableArg(key: String): T {
+        return arguments!!.getParcelable(key)
     }
 
     protected fun inform(@IdRes id: Int, text: String) {
