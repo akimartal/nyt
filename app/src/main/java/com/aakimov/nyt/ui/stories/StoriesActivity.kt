@@ -41,9 +41,4 @@ class StoriesActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedL
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.content, fragment).commit()
-    }
 }

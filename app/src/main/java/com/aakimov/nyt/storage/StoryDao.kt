@@ -22,7 +22,7 @@ abstract class StoryDao {
     @Transaction
    open fun insertStories(stories: List<Story>) {
         val plainStories = stories.map { it.story }.toList()
-        insert(plainStories.filterNotNull())
+        insert(plainStories)
         val multimedias = stories.flatMap { it.multimedia }.toList()
         insertMultimedias(multimedias)
     }

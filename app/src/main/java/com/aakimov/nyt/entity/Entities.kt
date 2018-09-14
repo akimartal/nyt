@@ -8,7 +8,7 @@ import java.util.*
 
 class Story {
     @Embedded
-    var story: PlainStory? = null
+    var story: PlainStory = PlainStory()
 
     @Relation(parentColumn = "guid", entityColumn = "storyId")
     var multimedia: List<Multimedia> = arrayListOf()

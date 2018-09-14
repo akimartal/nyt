@@ -4,7 +4,8 @@ import com.aakimov.nyt.entity.Story
 import com.aakimov.nyt.ui.base.BaseViewState
 
 data class StoriesViewState(val isLoading: Boolean = false, val errorText: String = "",
-                            val stories: List<Story> = emptyList()) : BaseViewState {
+                            val stories: List<Story> = emptyList())
+    : BaseViewState {
 
     fun reduce(event: StoriesEvent): StoriesViewState =
             when (event) {

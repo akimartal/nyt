@@ -13,6 +13,7 @@ import com.aakimov.nyt.App
 import com.aakimov.nyt.R
 import com.aakimov.nyt.di.NytViewModelFactory
 import com.aakimov.nyt.ui.base.BaseFragment
+import com.aakimov.nyt.ui.details.DetailsFragment
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_stories.*
 import javax.inject.Inject
@@ -26,6 +27,8 @@ class StoriesFragment : BaseFragment(), StoriesView {
     @Inject
     lateinit var adapter: StoriesAdapter
 
+    private val loadStoriesSubject = PublishSubject.create<String>()
+
     companion object {
         private const val TOPIC_KEY = "TOPIC_KEY"
 
@@ -37,8 +40,6 @@ class StoriesFragment : BaseFragment(), StoriesView {
             return f
         }
     }
-
-    private val loadStoriesSubject = PublishSubject.create<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stories, container, false)
@@ -58,6 +59,7 @@ class StoriesFragment : BaseFragment(), StoriesView {
         loadStoriesSubject.onNext(getStringArg(TOPIC_KEY))
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
+        adapter.setItemClickedListener { replaceFragment(DetailsFragment.newInstance(it)) }
         refresh.setOnRefreshListener {
             loadStoriesSubject.onNext(getStringArg(TOPIC_KEY))
         }

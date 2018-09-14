@@ -21,4 +21,11 @@ open class BaseFragment : Fragment() {
         view.setBackgroundColor(ResourcesCompat.getColor(resources, R.color.colorAccent, null))
         snack.show()
     }
+
+    protected fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+        val tr = fragmentManager?.beginTransaction()
+                ?.replace(R.id.content, fragment)
+        if (addToBackStack) tr?.addToBackStack(null)
+        tr?.commit()
+    }
 }
