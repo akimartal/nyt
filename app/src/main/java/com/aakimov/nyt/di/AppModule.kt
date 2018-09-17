@@ -8,6 +8,8 @@ import com.aakimov.nyt.api.ApiService
 import com.aakimov.nyt.storage.Db
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -58,6 +60,7 @@ class AppModule(val app: Application) {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder().addInterceptor(apiRequestInterceptor)
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(StethoInterceptor())
                 .build()
     }
 
