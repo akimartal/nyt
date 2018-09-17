@@ -9,15 +9,12 @@ import java.util.*
 
 @Parcelize
 class Story : Parcelable {
-    @Embedded
     var story: PlainStory = PlainStory()
-
-    @Relation(parentColumn = "guid", entityColumn = "storyId")
     var multimedia: List<Multimedia> = arrayListOf()
 }
 
 @Parcelize
-@Entity(tableName = "story")
+@Entity(tableName = "story", indices = [Index(value = ["guid"], unique = true)])
 data class PlainStory(
 
         @PrimaryKey
@@ -66,7 +63,13 @@ data class PlainStory(
         var shortUrl: String? = "") : Parcelable
 
 @Parcelize
-@Entity(tableName = "multimedia")
+@Entity(tableName = "multimedia",
+        foreignKeys = [(ForeignKey(entity = PlainStory::class,
+                parentColumns = ["guid"],
+                childColumns = ["storyId"],
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE,
+                deferred = true))])
 data class Multimedia(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long,
@@ -80,10 +83,3 @@ data class Multimedia(
         var caption: String,
         var copyright: String
 ) : Parcelable
-//        ,
-//        foreignKeys = [(ForeignKey(entity = PlainStory::class,
-//                parentColumns = ["guid"],
-//                childColumns = ["storyId"],
-//                onDelete = ForeignKey.CASCADE,
-//                onUpdate = ForeignKey.CASCADE,
-//                deferred = true))]
