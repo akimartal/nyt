@@ -34,7 +34,7 @@ class StoriesAdapter constructor(val glide: RequestManager)
     }
 
     override fun onBindViewHolder(vh: StoriesAdapter.StoryViewHolder, pos: Int) {
-        vh.title.text = items[pos].story.title
+        vh.title.text = items[pos].title
         if (items[pos].multimedia.isNotEmpty()) {
             glide.load(items[pos].multimedia[0].url).into(vh.image)
         } else {

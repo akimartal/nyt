@@ -41,8 +41,8 @@ class DetailsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val story = getParcelableArg<Story>(STORY)
-        title.text = story.story.title
-        text.text = story.story.abstract
+        title.text = story.title
+        text.text = story.abstract
         if (story.multimedia.isNotEmpty()) {
             glide.load(story.multimedia[0].url).into(image)
         }

@@ -8,14 +8,8 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-class Story : Parcelable {
-    var story: PlainStory = PlainStory()
-    var multimedia: List<Multimedia> = arrayListOf()
-}
-
-@Parcelize
 @Entity(tableName = "story", indices = [Index(value = ["guid"], unique = true)])
-data class PlainStory(
+data class Story(
 
         @PrimaryKey
         @ColumnInfo(name = "guid")
@@ -60,11 +54,13 @@ data class PlainStory(
         @ColumnInfo(name = "geo_facet")
         var geoFacet: List<String> = emptyList(),
         @ColumnInfo(name = "short_url")
-        var shortUrl: String? = "") : Parcelable
+        var shortUrl: String? = "",
+        @Ignore
+        var multimedia: List<Multimedia> = arrayListOf()) : Parcelable
 
 @Parcelize
 @Entity(tableName = "multimedia",
-        foreignKeys = [(ForeignKey(entity = PlainStory::class,
+        foreignKeys = [(ForeignKey(entity = Story::class,
                 parentColumns = ["guid"],
                 childColumns = ["storyId"],
                 onDelete = ForeignKey.CASCADE,

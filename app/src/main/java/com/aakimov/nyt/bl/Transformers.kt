@@ -3,7 +3,6 @@ package com.aakimov.nyt.bl
 import com.aakimov.nyt.api.response.NytResponse
 import com.aakimov.nyt.api.response.StoryResponse
 import com.aakimov.nyt.entity.Multimedia
-import com.aakimov.nyt.entity.PlainStory
 import com.aakimov.nyt.entity.Story
 import com.aakimov.nyt.util.DateTimeUtils
 import io.reactivex.Observable
@@ -18,13 +17,12 @@ class StoriesTransformer : ObservableTransformer<NytResponse<List<StoryResponse>
     }
 
     private fun toStory(sr: StoryResponse): Story {
-        val story = Story()
         val storyId = UUID.randomUUID().toString()
         val multimedia = sr.multimedia.map {
             Multimedia(0, storyId, it.url, it.format, it.height, it.width, it.type, it.subtype,
                     it.caption, it.copyright)
         }.toList()
-        val plainStory = PlainStory(storyId,
+        return Story(storyId,
                 sr.section,
                 sr.subsection,
                 sr.title,
@@ -41,9 +39,7 @@ class StoriesTransformer : ObservableTransformer<NytResponse<List<StoryResponse>
                 sr.orgFacet,
                 sr.perFacet,
                 sr.geoFacet,
-                sr.shortUrl)
-        story.story = plainStory
-        story.multimedia = multimedia
-        return story
+                sr.shortUrl,
+                multimedia)
     }
 }
