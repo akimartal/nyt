@@ -23,6 +23,7 @@ class StoriesRepository @Inject constructor(val api: ApiService, val db: Db) {
     }
 
     private fun saveToDb(list: List<Story>) {
+        db.storyDao().deleteAllStories()
         db.storyDao().insertStories(list)
     }
 }

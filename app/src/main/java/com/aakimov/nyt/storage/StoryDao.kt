@@ -1,9 +1,6 @@
 package com.aakimov.nyt.storage
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Transaction
+import android.arch.persistence.room.*
 import com.aakimov.nyt.entity.Multimedia
 import com.aakimov.nyt.entity.PlainStory
 import com.aakimov.nyt.entity.Story
@@ -20,10 +17,13 @@ abstract class StoryDao {
     abstract fun delete(stories: List<PlainStory>)
 
     @Transaction
-   open fun insertStories(stories: List<Story>) {
+    open fun insertStories(stories: List<Story>) {
         val plainStories = stories.map { it.story }.toList()
         insert(plainStories)
         val multimedias = stories.flatMap { it.multimedia }.toList()
         insertMultimedias(multimedias)
     }
+
+    @Query("DELETE FROM story")
+    abstract fun deleteAllStories()
 }

@@ -69,10 +69,12 @@ data class PlainStory(
                 childColumns = ["storyId"],
                 onDelete = ForeignKey.CASCADE,
                 onUpdate = ForeignKey.CASCADE,
-                deferred = true))])
+                deferred = true))],
+        indices = [Index(value = ["storyId"])])//room doesn't add index to foreign keys
 data class Multimedia(
         @ColumnInfo(name = "id")
-        @PrimaryKey(autoGenerate = true) var id: Long,
+        @PrimaryKey(autoGenerate = true)
+        var id: Long,
         var storyId: String,
         var url: String,
         var format: String,
